@@ -7,7 +7,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.client.util.InputUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,12 +30,13 @@ public class BaritoneRemastered implements ClientModInitializer {
         pathfindingManager = new PathfindingManager();
         miningManager = new MiningManager();
         
-        // Register keybindings - Create KeyBinding without InputUtil.Type
+        // Register keybindings - Use InputUtil for key code
         pauseKeyBinding = new KeyBinding(
             "key.baritone-remastered.pause",
-            GLFW.GLFW_KEY_P,
+            InputUtil.UNKNOWN_KEY.getCode(),
             "category.baritone-remastered"
         );
+        pauseKeyBinding.setBoundKey(InputUtil.fromKeyCode(80, 0)); // P key
         KeyBindingHelper.registerKeyBinding(pauseKeyBinding);
         
         // Register commands
