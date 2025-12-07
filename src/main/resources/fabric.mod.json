@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "baritone-remastered",
+  "version": "${version}",
+  "name": "Baritone Remastered",
+  "description": "Advanced pathfinding and automation mod",
+  "authors": [
+    "BaritoneTeam"
+  ],
+  "contact": {
+    "sources": "https://github.com/yourusername/baritone-remastered"
+  },
+  "license": "LGPL-3.0",
+  "icon": "assets/baritone-remastered/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.baritone.remastered.BaritoneRemastered"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
