@@ -1,2 +1,12 @@
-org.gradle.jvmargs=-Xmx2G
-org.gradle.parallel=true
+pluginManagement {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'baritone-remastered'

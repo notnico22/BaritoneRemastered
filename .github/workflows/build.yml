@@ -20,16 +20,24 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
-        cache: 'gradle'
         
-    - name: Grant execute permission for gradlew
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v2
+      
+    - name: Make gradlew executable
       run: chmod +x gradlew
       
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+    - name: Setup Gradle wrapper
+      run: |
+        if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+          echo "Gradle wrapper JAR not found, generating..."
+          gradle wrapper --gradle-version 8.8
+        fi
       
     - name: Build with Gradle
-      run: ./gradlew build
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: build
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
@@ -37,3 +45,11 @@ jobs:
         name: Baritone-Remastered-JAR
         path: build/libs/*.jar
         if-no-files-found: error
+        
+    - name: Upload to release (if tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/libs/*.jar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
